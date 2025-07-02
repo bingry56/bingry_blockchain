@@ -1,19 +1,40 @@
+# Cargo.toml
 [package]
-name = "blockchain_tutorial"
+name = "bingry_blockchain"
 version = "0.1.0"
 edition = "2024"
 
+# 라이브러리 정의
+[lib]
+name = "bingry_blockchain_lib" # 라이브러리 이름 (패키지 이름과 다르게 지정 가능)
+path = "src/lib.rs"
+
+# 바이너리 정의 (client)
+[[bin]]
+name = "client"
+path = "src/bin/client.rs"
+
+# 바이너리 정의 (main - 서버)
+[[bin]]
+name = "server" # main.rs를 server 바이너리로 명시
+path = "src/main.rs"
+
+
 [dependencies]
 sha256 = "1.5.0"
-chrono = "0.4.38"
-k256 = { version = "0.13", features = ["ecdsa"] }
-ecdsa = { version = "0.16", features = ["signing"] }
+chrono = { version = "0.4.38", features = ["serde"] }
+k256 = { version = "0.13.0", features = ["ecdsa", "arithmetic", "serde"] }
+ecdsa = { version = "0.16", features = ["signing", "serde"] }
 rand_core = { version = "0.6", features = ["std"] }
 rand = "0.8"
-hex = "0.4"
-sha2 = "0.10" # 이전에 필요하다고 언급되었지만, 현재 transaction.rs에서는 직접 사용되지 않습니다.
-             # 그러나 다른 모듈에서 필요할 수 있으므로 유지하는 것이 좋습니다.
-digest = "0.10" # 이전에 필요하다고 언급되었지만, 현재 transaction.rs에서는 직접 사용되지 않습니다.
-                # 그러나 다른 모듈에서 필요할 수 있으므로 유지하는 것이 좋습니다.
-generic-array = "0.14"
-typenum = "1.17"
+hex = "0.4.3"
+sha2 = "0.10"
+digest = "0.10"
+generic-array = "0.14.7"
+typenum = "1.17.0"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 로컬 라이브러리 크레이트를 명시적으로 의존성에 추가
+#bingry_blockchain_lib = { path = "src/lib.rs" }

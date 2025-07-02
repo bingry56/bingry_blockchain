@@ -1,22 +1,14 @@
 // src/transaction.rs
 use chrono::Utc;
 use k256::ecdsa::{SigningKey, VerifyingKey, Signature};
-// `ToEncodedPoint`는 `wallet.rs`에서 주소 생성에 사용되며, `transaction.rs`에서는 직접 사용되지 않습니다.
-// 다른 곳에서 올바르게 사용된다고 가정하고 여기서는 사용되지 않는 임포트 경고를 피하기 위해 주석 처리합니다.
-// use k256::elliptic_curve::sec1::ToEncodedPoint;
+use k256::elliptic_curve::sec1::ToEncodedPoint;
 use hex::{encode, decode};
-
-// 암호화 트레이트의 올바른 임포트
-// PrehashSigner와 PrehashVerifier는 `hazmat` (위험 물질) 모듈에 있습니다.
 use ecdsa::signature::hazmat::{PrehashSigner, PrehashVerifier};
-// `DigestSigner`와 `DigestVerifier`는 미리 해시된 서명/검증을 사용할 때는 사용되지 않습니다.
-// `sha2::Sha256` 및 `digest::Digest`는 미리 해시된 데이터를 서명/검증하는 데 직접 사용되지 않습니다.
-// 메시지 해싱에는 `sha256` 크레이트의 `sha256::digest`가 사용됩니다.
+use generic_array::{typenum::U64, typenum::Unsigned};
+use core::convert::TryFrom;
+use serde::{Serialize, Deserialize}; // Serialize, Deserialize 트레이트 추가
 
-use generic_array::{GenericArray, typenum::U64, typenum::Unsigned}; // Unsigned 트레이트 추가
-use core::convert::TryFrom; // TryFrom 트레이트 추가
-
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)] // Serialize, Deserialize 추가
 pub struct Transaction {
     pub sender: String,    // 송신자 주소 (공개 키의 16진수 표현)
     pub recipient: String, // 수신자 주소 (공개 키의 16진수 표현)

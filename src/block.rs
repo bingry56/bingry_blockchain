@@ -1,9 +1,10 @@
 // src/block.rs
 use super::transaction::Transaction; // transaction 모듈의 Transaction 구조체 사용
 use sha256::digest;
-use chrono::Utc; // Utc는 타임스탬프에 필요하므로 유지
+use chrono::Utc;
+use serde::{Serialize, Deserialize}; // Serialize, Deserialize 트레이트 추가
 
-#[derive(Debug, Clone)] // Debug는 디버그 출력을 위해, Clone은 복사를 위해 필요
+#[derive(Debug, Clone, Serialize, Deserialize)] // Serialize, Deserialize 추가
 pub struct Block {
     pub index: u64,
     pub timestamp: i64,
