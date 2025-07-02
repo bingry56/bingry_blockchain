@@ -1,0 +1,19 @@
+[package]
+name = "blockchain_tutorial"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+sha256 = "1.5.0"
+chrono = "0.4.38"
+k256 = { version = "0.13", features = ["ecdsa"] }
+ecdsa = { version = "0.16", features = ["signing"] }
+rand_core = { version = "0.6", features = ["std"] }
+rand = "0.8"
+hex = "0.4"
+sha2 = "0.10" # 이전에 필요하다고 언급되었지만, 현재 transaction.rs에서는 직접 사용되지 않습니다.
+             # 그러나 다른 모듈에서 필요할 수 있으므로 유지하는 것이 좋습니다.
+digest = "0.10" # 이전에 필요하다고 언급되었지만, 현재 transaction.rs에서는 직접 사용되지 않습니다.
+                # 그러나 다른 모듈에서 필요할 수 있으므로 유지하는 것이 좋습니다.
+generic-array = "0.14"
+typenum = "1.17"
